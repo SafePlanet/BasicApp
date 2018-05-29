@@ -7,33 +7,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spi.config.ValidationMessageConfig;
-import com.spi.service.dto.ExternalUser;
+import com.spi.exception.ValidationMessageException;
+import com.spi.service.dto.User;
 
 @Service
 public class UserSignupValidator {
-    public static final Logger LOG = LoggerFactory.getLogger(UserSignupValidator.class);
-    
-    @Autowired
-    private ValidationMessageConfig validationMessageConfig;
+	public static final Logger LOG = LoggerFactory.getLogger(UserSignupValidator.class);
 
-    public void validate(ExternalUser externalUser) {
-    	StringBuffer errors  = new StringBuffer();
-        try {
-            LOG.info("Validation for Invoice Generation Starts");
-            if(externalUser.getFirstName() == null && StringUtils.isNotBlank(externalUser.getFirstName())) {
-            	errors.append(validationMessageConfig.getExternalUserNameRequired());;
-            }
-            System.out.println(validationMessageConfig.xyz);
-            if(externalUser.getLastName() == null && StringUtils.isNotBlank(externalUser.getLastName())) {
-            	
-            }
-            if(externalUser.getMobile() == null && StringUtils.isNotBlank(externalUser.getMobile())) {
-            	
-            }
-//            LOG.info("Validation for Invoice Generation Ends with errors " + errors.getErrorCount());
-        } catch (Exception e) {
-            LOG.error("Error in Validation ", e);
-//            errors.reject(ErrorCodes.BAD_REQUEST.getCode());
-        }
-    }
+	@Autowired
+	private ValidationMessageConfig validationMessageConfig;
+	
+	@Autowired
+	private EmailValidator emailValidator;
+
+	public void validate(User externalUser) {
+		LOG.info("Validation for Invoice Generation Starts");
+		
+		StringBuffer errorFields = new StringBuffer();
+		
+		if (!StringUtils.isNotBlank(externalUser.getFirstName())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_FISRTNAME_REQUIRED);
+		}
+		if (!StringUtils.isNotBlank(externalUser.getLastName())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_LASTNAME_REQUIRED);
+		}
+		if (!StringUtils.isNotBlank(externalUser.getEmailAddress())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_EMAIL_REQUIRED);
+		} else if(!emailValidator.validate(externalUser.getEmailAddress())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_EMAIL_INVALID);
+		}
+		
+
+		if (!StringUtils.isNotBlank(externalUser.getMobile())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_MOBILE_REQUIRED);
+		} else if (externalUser.getMobile().length() < 10 || !externalUser.getMobile().matches("[0-9]+")) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_MOBILE_INVALID);
+		}
+
+		if (!StringUtils.isNotBlank(externalUser.getHouseNo())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_HOUSE_REQUIRED);
+		}
+		if (!StringUtils.isNotBlank(externalUser.getAddress())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_ADDRESS_REQUIRED);
+		}
+		if (!StringUtils.isNotBlank(externalUser.getCity())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_CITY_REQUIRED);
+		}
+		if (!StringUtils.isNotBlank(externalUser.getState())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_STATE_REQUIRED);
+		}
+		if (!StringUtils.isNotBlank(externalUser.getPinCode())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_PINCODE_REQUIRED);
+		}
+		
+		final String errors = errorFields.toString();
+		if (!errors.isEmpty()) {
+			throw new ValidationMessageException(errors);
+		}
+
+	}
 }

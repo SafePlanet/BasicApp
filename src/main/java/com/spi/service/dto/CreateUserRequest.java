@@ -14,7 +14,7 @@ public class CreateUserRequest {
 
 	@NotNull
 	@Valid
-	private ExternalUser user;
+	private User user;
 
 	@NotNull
 	@Valid
@@ -25,17 +25,17 @@ public class CreateUserRequest {
 	public CreateUserRequest() {
 	}
 
-	public CreateUserRequest(final ExternalUser user,
+	public CreateUserRequest(final User user,
 			final PasswordRequest password) {
 		this.user = user;
 		this.password = password;
 	}
 
-	public ExternalUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(ExternalUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
