@@ -3,9 +3,11 @@ package com.spi.service.dto;
 
 import java.security.Principal;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import com.spi.exception.ValidationException;
@@ -30,11 +32,15 @@ public class ExternalUser implements Principal {
 	}
 
 	@Length(max = 50)
+	@NotNull
 	private String firstName;
+	
 	@Length(max = 50)
+	@NotBlank
 	private String lastName;
 
 	@Email(message = "{email.invalid}")
+	@NotBlank(message = "{email.required}")
 	private String emailAddress;
 
 	private Long pkId;
