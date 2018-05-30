@@ -20,7 +20,7 @@ public class ValidationMessageConfig {
 
 	@Value("${external.user.email.required}")
 	public String EXTERNAL_USER_EMAIL_REQUIRED;
-
+	
 	@Value("${external.user.email.invalid}")
 	public String EXTERNAL_USER_EMAIL_INVALID;
 

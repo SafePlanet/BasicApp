@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import com.mongodb.MongoWriteException;
 import com.spi.exception.ErrorMessage;
 import com.spi.exception.ValidationMessageException;
 
@@ -33,5 +34,16 @@ public class AdviceController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(errorMessage);
     }
+    
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(MongoWriteException.class)
+    public ResponseEntity<ErrorMessage> handleMongoDuplicate(final Exception e) {
+        LOG.error("Caught ValidationMessageException", e);
+        ErrorMessage errorMessage = ErrorMessage.builder().withMessage(e.getMessage()).withName(HttpStatus.INTERNAL_SERVER_ERROR.name())
+                .withStatus(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).body(errorMessage);
+    }
+    
 
 }

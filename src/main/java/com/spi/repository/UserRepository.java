@@ -8,5 +8,6 @@ import com.spi.service.dto.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
+	public User findByEmailAddress(String emailAddress);
 
 }

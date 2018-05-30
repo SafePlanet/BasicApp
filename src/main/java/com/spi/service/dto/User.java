@@ -2,15 +2,21 @@
 package com.spi.service.dto;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
+@Document
 public class User {
-
+	
 	@Id
 	private String id;
+	private String uuid;
 	private String firstName;
 	private String lastName;
+	@Indexed(unique=true)
 	private String emailAddress;
+	private String password;
 	private boolean isVerified;
 	private String role;
 	private String mobile;
@@ -21,7 +27,7 @@ public class User {
 	private String pinCode;
 
 	private String userImage;
-
+	
 	public String getId() {
 		return id;
 	}
@@ -125,5 +131,28 @@ public class User {
 	public void setUserImage(String userImage) {
 		this.userImage = userImage;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
+	public String toString() {
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", emailAddress=" + emailAddress + ", role=" + role + 
+				", mobile=" + mobile + ", houseNo=" + houseNo + ", address=" + address + 
+				", city=" + city + ", state=" + state+ ", pinCode=" + pinCode + "]"; 
+	}
+	
 
 }

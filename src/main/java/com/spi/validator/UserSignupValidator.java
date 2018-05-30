@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spi.config.ValidationMessageConfig;
 import com.spi.exception.ValidationMessageException;
+import com.spi.service.dto.LoginRequest;
 import com.spi.service.dto.User;
 
 @Service
@@ -20,8 +21,8 @@ public class UserSignupValidator {
 	@Autowired
 	private EmailValidator emailValidator;
 
-	public void validate(User externalUser) {
-		LOG.info("Validation for Invoice Generation Starts");
+	public void validateUser(User externalUser) {
+		LOG.info("validating User");
 		
 		StringBuffer errorFields = new StringBuffer();
 		
@@ -31,6 +32,11 @@ public class UserSignupValidator {
 		if (!StringUtils.isNotBlank(externalUser.getLastName())) {
 			errorFields.append(validationMessageConfig.EXTERNAL_USER_LASTNAME_REQUIRED);
 		}
+		
+		if (externalUser.getPassword() == null || !StringUtils.isNotBlank(externalUser.getPassword().toString())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_PASSWORD_REQUIRED);
+		}
+		
 		if (!StringUtils.isNotBlank(externalUser.getEmailAddress())) {
 			errorFields.append(validationMessageConfig.EXTERNAL_USER_EMAIL_REQUIRED);
 		} else if(!emailValidator.validate(externalUser.getEmailAddress())) {
@@ -65,5 +71,23 @@ public class UserSignupValidator {
 			throw new ValidationMessageException(errors);
 		}
 
+	}
+
+	public void validateLoginRequest(LoginRequest loginRequest) {
+		LOG.info("validating loginRequest");
+		
+		StringBuffer errorFields = new StringBuffer();
+		if (loginRequest.getPassword() == null || !StringUtils.isNotBlank(loginRequest.getPassword().toString())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_PASSWORD_REQUIRED);
+		}
+		
+		if (!StringUtils.isNotBlank(loginRequest.getUsername())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_EMAIL_REQUIRED);
+		}
+		final String errors = errorFields.toString();
+		if (!errors.isEmpty()) {
+			throw new ValidationMessageException(errors);
+		}
+		
 	}
 }

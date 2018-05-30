@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spi.service.UserService;
+import com.spi.service.dto.LoginRequest;
 import com.spi.service.dto.User;
 import com.spi.validator.UserSignupValidator;
 
@@ -22,18 +23,19 @@ public class UserController {
 	UserService userService;
 	
 	@Autowired
-	UserSignupValidator val;
+	UserSignupValidator userValidator;
 	
 	@PostMapping(path="/signup")
-	public void signUp(@RequestBody User externalUser) {
+	public void signUp(@RequestBody User externalUser) throws Exception {
 		LOG.info("Inside user signup {}" + externalUser.toString());
-		val.validate(externalUser);
+		userValidator.validateUser(externalUser);
 		userService.signUp(externalUser);
 	}
 	
 	@PostMapping(path="/login")
-	public void login() {
-		userService.login();
+	public void login(@RequestBody LoginRequest loginRequest) throws Exception {
+		userValidator.validateLoginRequest(loginRequest);
+		userService.login(loginRequest);
 	}
 
 }
