@@ -20,10 +20,10 @@ public class UserController {
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	UserSignupValidator userValidator;
+	private UserSignupValidator userValidator;
 	
 	@PostMapping(path="/signup")
 	public void signUp(@RequestBody User externalUser) throws Exception {

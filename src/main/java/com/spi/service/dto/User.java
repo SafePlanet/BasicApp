@@ -17,15 +17,11 @@ public class User {
 	@Indexed(unique=true)
 	private String emailAddress;
 	private String password;
+	private int passwordAttempts;
 	private boolean isVerified;
 	private String role;
 	private String mobile;
-	private String houseNo;
-	private String address;
-	private String city;
-	private String state;
-	private String pinCode;
-
+	private Address address;
 	private String userImage;
 	
 	public String getId() {
@@ -84,46 +80,6 @@ public class User {
 		this.mobile = mobile;
 	}
 
-	public String getHouseNo() {
-		return houseNo;
-	}
-
-	public void setHouseNo(String houseNo) {
-		this.houseNo = houseNo;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getPinCode() {
-		return pinCode;
-	}
-
-	public void setPinCode(String pinCode) {
-		this.pinCode = pinCode;
-	}
-
 	public String getUserImage() {
 		return userImage;
 	}
@@ -148,10 +104,29 @@ public class User {
 		this.uuid = uuid;
 	}
 	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	public int getPasswordAttempts() {
+		return passwordAttempts;
+	}
+
+	public void setPasswordAttempts(int passwordAttempts) {
+		this.passwordAttempts = passwordAttempts;
+	}
+
+	public void incrementPasswordAttempt() {
+		this.passwordAttempts++;
+	}
+	
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", emailAddress=" + emailAddress + ", role=" + role + 
-				", mobile=" + mobile + ", houseNo=" + houseNo + ", address=" + address + 
-				", city=" + city + ", state=" + state+ ", pinCode=" + pinCode + "]"; 
+				", mobile=" + mobile + ", address=" + address.toString() + "]"; 
 	}
 	
 

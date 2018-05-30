@@ -20,7 +20,7 @@ public class CreateUserRequest {
 	@Valid
 	private PasswordRequest password;
 
-	private AddressVM address;
+	private Address address;
 
 	public CreateUserRequest() {
 	}
@@ -50,7 +50,7 @@ public class CreateUserRequest {
 	/**
 	 * @return the address
 	 */
-	public AddressVM getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
@@ -58,7 +58,7 @@ public class CreateUserRequest {
 	 * @param address
 	 *            the address to set
 	 */
-	public void setAddress(AddressVM address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

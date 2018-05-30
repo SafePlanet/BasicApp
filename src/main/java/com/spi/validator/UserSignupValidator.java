@@ -50,19 +50,16 @@ public class UserSignupValidator {
 			errorFields.append(validationMessageConfig.EXTERNAL_USER_MOBILE_INVALID);
 		}
 
-		if (!StringUtils.isNotBlank(externalUser.getHouseNo())) {
-			errorFields.append(validationMessageConfig.EXTERNAL_USER_HOUSE_REQUIRED);
+		if (!StringUtils.isNotBlank(externalUser.getAddress().getAddressLine1())) {
+			errorFields.append(validationMessageConfig.EXTERNAL_USER_ADDRESS_LINE_1_REQUIRED);
 		}
-		if (!StringUtils.isNotBlank(externalUser.getAddress())) {
-			errorFields.append(validationMessageConfig.EXTERNAL_USER_ADDRESS_REQUIRED);
-		}
-		if (!StringUtils.isNotBlank(externalUser.getCity())) {
+		if (!StringUtils.isNotBlank(externalUser.getAddress().getCity())) {
 			errorFields.append(validationMessageConfig.EXTERNAL_USER_CITY_REQUIRED);
 		}
-		if (!StringUtils.isNotBlank(externalUser.getState())) {
+		if (!StringUtils.isNotBlank(externalUser.getAddress().getState())) {
 			errorFields.append(validationMessageConfig.EXTERNAL_USER_STATE_REQUIRED);
 		}
-		if (!StringUtils.isNotBlank(externalUser.getPinCode())) {
+		if (!StringUtils.isNotBlank(externalUser.getAddress().getPinCode())) {
 			errorFields.append(validationMessageConfig.EXTERNAL_USER_PINCODE_REQUIRED);
 		}
 		

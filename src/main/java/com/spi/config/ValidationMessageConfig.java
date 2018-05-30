@@ -39,11 +39,8 @@ public class ValidationMessageConfig {
 	@Value("${external.user.mobile.invalid}")
 	public String EXTERNAL_USER_MOBILE_INVALID;
 
-	@Value("${external.user.house.required}")
-	public String EXTERNAL_USER_HOUSE_REQUIRED;
-
-	@Value("${external.user.address.required}")
-	public String EXTERNAL_USER_ADDRESS_REQUIRED;
+	@Value("${external.user.address.line1.required}")
+	public String EXTERNAL_USER_ADDRESS_LINE_1_REQUIRED;
 
 	@Value("${external.user.city.required}")
 	public String EXTERNAL_USER_CITY_REQUIRED;
@@ -53,5 +50,9 @@ public class ValidationMessageConfig {
 
 	@Value("${external.user.pinCode.required}")
 	public String EXTERNAL_USER_PINCODE_REQUIRED;
+	
+	@Value("${user.password.attempts.accede.limit}")
+	public String PASSWORD_ATTEMPT_LIMIT;
+	
 
 }

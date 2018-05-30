@@ -1,6 +1,6 @@
 package com.spi.service.dto;
 
-public class AddressVM {
+public class Address {
 
 	private String addressLine1 = null;
 	private String addressLine2 = null;
@@ -8,10 +8,8 @@ public class AddressVM {
 	private String state = null;
 	private String pinCode = null;
 	private String country = null;
-	private char voidInd;
-
-	private String addressType;
-
+	private String addressType = null;
+	
 	/**
 	 * @return the addressType
 	 */
@@ -116,20 +114,11 @@ public class AddressVM {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
-	/**
-	 * @return the voidInd
-	 */
-	public char getVoidInd() {
-		return voidInd;
+	
+	public String toString() {
+		return "Address [addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city + ", state=" + state + 
+				", pinCode=" + pinCode + ", country=" + country + ", addressType=" + addressType + "]"; 
 	}
 
-	/**
-	 * @param voidInd
-	 *            the voidInd to set
-	 */
-	public void setVoidInd(char voidInd) {
-		this.voidInd = voidInd;
-	}
 
 }

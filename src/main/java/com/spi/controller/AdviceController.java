@@ -27,9 +27,9 @@ public class AdviceController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ValidationMessageException.class)
-    public ResponseEntity<ErrorMessage> handleNotFound(final Exception e) {
+    public ResponseEntity<ErrorMessage> handleNotFound(final ValidationMessageException e) {
         LOG.error("Caught ValidationMessageException", e);
-        ErrorMessage errorMessage = ErrorMessage.builder().withMessage(e.getMessage()).withName(HttpStatus.NOT_FOUND.name())
+        ErrorMessage errorMessage = ErrorMessage.builder().withMessage(e.getErrorResponse().getConsumerMessage()).withName(HttpStatus.NOT_FOUND.name())
                 .withStatus(HttpStatus.NOT_FOUND).build();
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(errorMessage);
