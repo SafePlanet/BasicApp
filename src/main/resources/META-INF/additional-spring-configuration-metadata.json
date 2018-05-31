@@ -1,0 +1,23 @@
+{"properties": [{
+  "name": "appconfig.clientSecret",
+  "type": "java.lang.String",
+  "description": "A description for 'appconfig.clientSecret'"
+},
+{
+  "name": "password.attempt.limit",
+  "type": "java.lang.String",
+  "description": "A description for 'password.attempt.limit'"
+},
+{
+  "name": "appconfig.clientId",
+  "type": "java.lang.String",
+  "description": "A description for 'appconfig.clientId'"
+},
+{
+  "name": "appconfig.defaultUserRoles",
+  "type": "java.lang.String",
+  "description": "appconfig.defaultUserRoles'"
+}
+
+
+]}
