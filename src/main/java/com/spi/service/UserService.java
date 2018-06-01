@@ -43,9 +43,6 @@ public class UserService implements UserDetailsService{
 	private UserRepository userRepository;
 
 	@Autowired
-	private PasswordUtil passwordUtil;
-	
-	@Autowired
 	private PasswordEncoder encoder; 
 	
 	@Autowired
