@@ -1,7 +1,10 @@
 package com.spi.service;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -11,6 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.spi.config.ValidationMessageConfig;
@@ -25,8 +34,8 @@ import com.spi.utils.PasswordUtil;
 
 import freemarker.template.TemplateException;
 
-@Service
-public class UserService {
+@Service(value = "userService")
+public class UserService implements UserDetailsService{
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
@@ -35,6 +44,9 @@ public class UserService {
 
 	@Autowired
 	private PasswordUtil passwordUtil;
+	
+	@Autowired
+	private PasswordEncoder encoder; 
 	
 	@Autowired
 	private EmailService emailService;
@@ -49,17 +61,15 @@ public class UserService {
 		user.setRole(Role.anonymous.toString());
 		LOG.debug("processing user data for signup");
 		user.setUuid(UUID.randomUUID().toString());
-		user.setPassword(passwordUtil.hashPassword(user.getPassword(), user.getUuid()));
+		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
 		sendEmail();
 	}
-
+	
 	public void login(LoginRequest loginRequest) throws Exception {
 		System.out.println("login");
 		User user = userRepository.findByEmailAddress(loginRequest.getUsername());
-		String hashedPassword = passwordUtil.hashPassword(loginRequest.getPassword(), user.getUuid());
-		if (user.getPassword().equals(hashedPassword)) {
-			
+		if (encoder.matches(loginRequest.getPassword(), user.getPassword())) {
 			System.out.println("loging sucess");
 		} else if (user.getPasswordAttempts() < Integer.parseInt(passwordAttemptLimit)) {
 			user.incrementPasswordAttempt();
@@ -68,6 +78,18 @@ public class UserService {
 			throw new ValidationMessageException(validationMessageConfig.PASSWORD_ATTEMPT_LIMIT);
 		}
 
+	}
+	
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		User user = userRepository.findByUsername(userId);
+		if(user == null){
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
+	}
+	
+	private List<SimpleGrantedAuthority> getAuthority() {
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 	
 	public void sendEmail() throws MessagingException, IOException, TemplateException {

@@ -14,10 +14,10 @@ import com.spi.service.dto.User;
 import com.spi.validator.UserSignupValidator;
 
 @RestController
-@RequestMapping(path="/user")
-public class UserController {
+@RequestMapping(path="/")
+public class HomeController {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -25,6 +25,17 @@ public class UserController {
 	@Autowired
 	private UserSignupValidator userValidator;
 	
+	@PostMapping(path="/signup")
+	public void signUp(@RequestBody User externalUser) throws Exception {
+		LOG.info("Inside user signup {}" + externalUser.toString());
+		userValidator.validateUser(externalUser);
+		userService.signUp(externalUser);
+	}
 	
+	@PostMapping(path="/login")
+	public void login(@RequestBody LoginRequest loginRequest) throws Exception {
+		userValidator.validateLoginRequest(loginRequest);
+		userService.login(loginRequest);
+	}
 
 }

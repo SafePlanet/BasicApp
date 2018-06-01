@@ -1,13 +1,22 @@
 
 package com.spi.service.dto;
 
+import java.util.Collection;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Document
-public class User {
+public class User implements UserDetails{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7131770305496579495L;
 	
 	@Id
 	private String id;
@@ -16,6 +25,7 @@ public class User {
 	private String lastName;
 	@Indexed(unique=true)
 	private String emailAddress;
+	private String username;
 	private String password;
 	private int passwordAttempts;
 	private boolean isVerified;
@@ -126,7 +136,46 @@ public class User {
 	
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", emailAddress=" + emailAddress + ", role=" + role + 
-				", mobile=" + mobile + ", address=" + address.toString() + "]"; 
+				", mobile=" + mobile + ", userName=" + username + ", address=" + address.toString() + "]"; 
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 

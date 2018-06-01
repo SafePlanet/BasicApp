@@ -1,4 +1,4 @@
-package com.spi.service.model;
+package com.spi.exception;
 
 public enum ErrorCodes {
 
