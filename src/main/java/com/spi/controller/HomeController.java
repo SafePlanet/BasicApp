@@ -32,10 +32,5 @@ public class HomeController {
 		userService.signUp(externalUser);
 	}
 	
-	@PostMapping(path="/login")
-	public void login(@RequestBody LoginRequest loginRequest) throws Exception {
-		userValidator.validateLoginRequest(loginRequest);
-		userService.login(loginRequest);
-	}
 
 }

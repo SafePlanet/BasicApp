@@ -2,6 +2,7 @@ package com.spi.service;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -63,26 +64,24 @@ public class UserService implements UserDetailsService{
 		sendEmail();
 	}
 	
-	public void login(LoginRequest loginRequest) throws Exception {
-		System.out.println("login");
-		User user = userRepository.findByEmailAddress(loginRequest.getUsername());
-		if (encoder.matches(loginRequest.getPassword(), user.getPassword())) {
-			System.out.println("loging sucess");
-		} else if (user.getPasswordAttempts() < Integer.parseInt(passwordAttemptLimit)) {
-			user.incrementPasswordAttempt();
-			userRepository.save(user);
-		} else {
-			throw new ValidationMessageException(validationMessageConfig.PASSWORD_ATTEMPT_LIMIT);
-		}
-
-	}
-	
-	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(userId);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findByUsername(username);
 		if(user == null){
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
+		
+//		if (user.getPasswordAttempts() < Integer.parseInt(passwordAttemptLimit)) {
+//			user.incrementPasswordAttempt();
+//			userRepository.save(user);
+//		} else {
+//			throw new ValidationMessageException(validationMessageConfig.PASSWORD_ATTEMPT_LIMIT);
+//		}
+		
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
+	}
+	
+	public List<User> getAllUsers(){
+		return userRepository.findAll();
 	}
 	
 	private List<SimpleGrantedAuthority> getAuthority() {
