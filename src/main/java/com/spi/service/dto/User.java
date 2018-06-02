@@ -1,12 +1,14 @@
 
 package com.spi.service.dto;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -20,7 +22,6 @@ public class User implements UserDetails{
 	
 	@Id
 	private String id;
-	private String uuid;
 	private String firstName;
 	private String lastName;
 	@Indexed(unique=true)
@@ -105,14 +106,6 @@ public class User implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 	
 	public Address getAddress() {
 		return address;
@@ -141,8 +134,7 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+role));
 	}
 
 	@Override
@@ -157,25 +149,25 @@ public class User implements UserDetails{
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 

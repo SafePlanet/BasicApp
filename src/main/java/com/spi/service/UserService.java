@@ -49,19 +49,15 @@ public class UserService implements UserDetailsService{
 	@Autowired
 	private EmailService emailService;
 
-	@Autowired
-	private ValidationMessageConfig validationMessageConfig;
-	
 	@Value("${password.attempt.limit}")
 	private String passwordAttemptLimit;
 
 	public void signUp(User user) throws Exception {
 		user.setRole(Role.anonymous.toString());
 		LOG.debug("processing user data for signup");
-		user.setUuid(UUID.randomUUID().toString());
 		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
-		sendEmail();
+		sendWelcomeEmail();
 	}
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -70,25 +66,14 @@ public class UserService implements UserDetailsService{
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
 		
-//		if (user.getPasswordAttempts() < Integer.parseInt(passwordAttemptLimit)) {
-//			user.incrementPasswordAttempt();
-//			userRepository.save(user);
-//		} else {
-//			throw new ValidationMessageException(validationMessageConfig.PASSWORD_ATTEMPT_LIMIT);
-//		}
-		
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user.getRole()));
+		return user;
 	}
 	
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
 	}
 	
-	private List<SimpleGrantedAuthority> getAuthority(String role) {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+role));
-	}
-	
-	public void sendEmail() throws MessagingException, IOException, TemplateException {
+	public void sendWelcomeEmail() throws MessagingException, IOException, TemplateException {
 		Mail mail = new Mail();
         mail.setFrom("no-reply@memorynotfound.com");
         mail.setTo("info@memorynotfound.com");
