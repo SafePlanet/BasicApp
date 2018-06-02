@@ -77,15 +77,15 @@ public class UserService implements UserDetailsService{
 //			throw new ValidationMessageException(validationMessageConfig.PASSWORD_ATTEMPT_LIMIT);
 //		}
 		
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user.getRole()));
 	}
 	
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
 	}
 	
-	private List<SimpleGrantedAuthority> getAuthority() {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+	private List<SimpleGrantedAuthority> getAuthority(String role) {
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+role));
 	}
 	
 	public void sendEmail() throws MessagingException, IOException, TemplateException {
@@ -100,7 +100,7 @@ public class UserService implements UserDetailsService{
         model.put("signature", "https://memorynotfound.com");
         mail.setModel(model);
 
-        emailService.sendSimpleMessage(mail);
+        emailService.sendWelcomeAuthEmail(mail);
 	}
 
 }

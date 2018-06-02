@@ -26,7 +26,7 @@ public class EmailService {
 	@Autowired
 	private Configuration freemarkerConfig;
 
-	public void sendSimpleMessage(Mail mail) throws MessagingException, IOException, TemplateException {
+	public void sendWelcomeAuthEmail(Mail mail) throws MessagingException, IOException, TemplateException {
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
 				StandardCharsets.UTF_8.name());
