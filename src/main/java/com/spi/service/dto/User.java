@@ -10,10 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.security.SocialUserDetails;
 
 
 @Document
-public class User implements UserDetails{
+public class User implements UserDetails, SocialUserDetails{
 	
 	/**
 	 * 
@@ -34,7 +35,16 @@ public class User implements UserDetails{
 	private String mobile;
 	private Address address;
 	private String userImage;
+	private String source;
 	
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -129,7 +139,7 @@ public class User implements UserDetails{
 	
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", emailAddress=" + emailAddress + ", role=" + role + 
-				", mobile=" + mobile + ", userName=" + username + ", address=" + address.toString() + "]"; 
+				", mobile=" + mobile + ", userName=" + username + "]"; 
 	}
 
 	@Override
@@ -168,6 +178,12 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public String getUserId() {
+		
+		return id;
 	}
 	
 

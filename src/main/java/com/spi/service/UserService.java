@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService{
 //		sendWelcomeEmail();
 	}
 	
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public User loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
 		if(user == null){
 			throw new UsernameNotFoundException("Invalid username or password.");

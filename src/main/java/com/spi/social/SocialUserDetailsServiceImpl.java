@@ -8,12 +8,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
+
+import com.spi.service.UserService;
+import com.spi.service.dto.User;
  
 @Service
 public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
  
     @Autowired
-    private UserDetailsService userDetailService;
+    private UserService userDetailService;
  
     // After user created by ConnectionSignUpImpl.execute(Connection<?>)
     // This method is called by the Spring Social API.
@@ -23,9 +26,9 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
         System.out.println("SocialUserDetailsServiceImpl.loadUserByUserId=" + userName);
  
         // See UserDetailServiceImpl.
-        UserDetails userDetails = ((UserDetailsServiceImpl) userDetailService).loadUserByUsername(userName);
+        User userDetails = userDetailService.loadUserByUsername(userName);
  
-        return (SocialUserDetailsImpl) userDetails;
+        return  userDetails;
     }
  
 }

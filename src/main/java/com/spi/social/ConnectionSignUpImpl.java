@@ -10,11 +10,13 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Component;
 
 import com.spi.form.AppUserForm;
 import com.spi.repository.UserRepository;
 import com.spi.service.dto.Role;
+import com.spi.service.dto.SocialTypes;
 import com.spi.service.dto.User;
 
 @Component
@@ -33,47 +35,65 @@ public class ConnectionSignUpImpl implements ConnectionSignUp {
     @Override
     public String execute(Connection<?> connection) {
  
-        User account = createAppUser(connection);
+        User account = createSocialUser(connection);
         return account.getUsername();
     }
     
  // Auto create App User Account.
-    public User createAppUser(Connection<?> connection) {
-  
+    public User createSocialUser(Connection<?> connection) {
+    	  
         ConnectionKey key = connection.getKey();
-        // (facebook,12345), (google,123) ...
   
         System.out.println("key= (" + key.getProviderId() + "," + key.getProviderUserId() + ")");
-  
-        UserProfile userProfile = connection.fetchUserProfile();
-  
-        String email = userProfile.getEmail();
-        User appUser = userRepository.findByEmailAddress(email);
-        if (appUser != null) {
-            return appUser;
+        User socialUser;
+        if(SocialTypes.facebook.toString().equalsIgnoreCase(key.getProviderId())) {
+        	Facebook facebook = (Facebook) connection.getApi();
+            String [] fields = { "id", "about", "age_range", "birthday", "context", "cover", "currency", "devices", "education", "email", "favorite_athletes", 
+            		"favorite_teams", "first_name", "gender", "hometown", "inspirational_people", "installed", "install_type", "is_verified", "languages", "last_name", 
+            		"link", "locale", "location", "meeting_for", "middle_name", "name", "name_format", "political", "quotes", "payment_pricepoints", "relationship_status", 
+            		"religion", "security_settings", "significant_other", "sports", "test_group", "timezone", "third_party_id", "updated_time", "verified", 
+            		"video_upload_limits", "viewer_can_send_gift", "website", "work" };
+            
+            org.springframework.social.facebook.api.User userProfile = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
+            String email = userProfile.getEmail();
+            socialUser = userRepository.findByEmailAddress(email);
+            if (socialUser != null) {
+                return socialUser;
+            }
+
+            String randomPassword = UUID.randomUUID().toString().substring(0, 5);
+            String encrytedPassword = passwordEncoder.encode(randomPassword);
+            socialUser = new User();
+            socialUser.setPassword(encrytedPassword);
+            socialUser.setUsername(email);
+            socialUser.setEmailAddress(email);
+            socialUser.setFirstName(userProfile.getFirstName());
+            socialUser.setLastName(userProfile.getLastName());
+            socialUser.setRole(Role.user.toString());
+            
+        } else {
+        	UserProfile userProfile = connection.fetchUserProfile();
+        	String email = userProfile.getEmail();
+            socialUser = userRepository.findByEmailAddress(email);
+            if (socialUser != null) {
+                return socialUser;
+            }
+            String randomPassword = UUID.randomUUID().toString().substring(0, 5);
+            String encrytedPassword = passwordEncoder.encode(randomPassword);
+            //
+            socialUser = new User();
+            socialUser.setPassword(encrytedPassword);
+            socialUser.setUsername(email);
+            socialUser.setEmailAddress(email);
+            socialUser.setFirstName(userProfile.getFirstName());
+            socialUser.setLastName(userProfile.getLastName());
+            socialUser.setRole(Role.user.toString());
         }
-//        String userName_prefix = userProfile.getFirstName().trim().toLowerCase()//
-//                + "_" + userProfile.getLastName().trim().toLowerCase();
-//  
-//        String userName = this.findAvailableUserName(userName_prefix);
-        //
-        // Random Password! TODO: Need send email to User!
-        //
-        String randomPassword = UUID.randomUUID().toString().substring(0, 5);
-        String encrytedPassword = passwordEncoder.encode(randomPassword);
-        //
-        appUser = new User();
-//        appUser.setEnabled(true);
-        appUser.setPassword(encrytedPassword);
-        appUser.setUsername(email);
-        appUser.setEmailAddress(email);
-        appUser.setFirstName(userProfile.getFirstName());
-        appUser.setLastName(userProfile.getLastName());
-        appUser.setRole(Role.user.toString());
+        socialUser.setSource(key.getProviderId());
+        
+        socialUser = userRepository.save(socialUser);
   
-        appUser = userRepository.save(appUser);
-  
-        return appUser;
+        return socialUser;
     }
   
     public User registerNewUserAccount(AppUserForm appUserForm, List<String> roleNames) {

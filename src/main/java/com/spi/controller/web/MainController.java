@@ -37,9 +37,6 @@ import com.spi.validator.AppUserValidator;
 public class MainController {
   
     @Autowired
-    private UserRepository appUserDAO;
-  
-    @Autowired
     private ConnectionFactoryLocator connectionFactoryLocator;
   
     @Autowired
