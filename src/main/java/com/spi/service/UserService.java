@@ -33,7 +33,7 @@ import com.spi.service.dto.Role;
 import com.spi.service.dto.User;
 import com.spi.utils.PasswordUtil;
 
-import freemarker.template.TemplateException;
+//import freemarker.template.TemplateException;
 
 @Service(value = "userService")
 public class UserService implements UserDetailsService{
@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService{
 		LOG.debug("processing user data for signup");
 		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
-		sendWelcomeEmail();
+//		sendWelcomeEmail();
 	}
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -73,19 +73,27 @@ public class UserService implements UserDetailsService{
 		return userRepository.findAll();
 	}
 	
-	public void sendWelcomeEmail() throws MessagingException, IOException, TemplateException {
-		Mail mail = new Mail();
-        mail.setFrom("no-reply@memorynotfound.com");
-        mail.setTo("info@memorynotfound.com");
-        mail.setSubject("Sending Email with Freemarker HTML Template Example");
-
-        Map<String, String> model = new HashMap<>();
-        model.put("name", "Memorynotfound.com");
-        model.put("location", "Belgium");
-        model.put("signature", "https://memorynotfound.com");
-        mail.setModel(model);
-
-        emailService.sendWelcomeAuthEmail(mail);
+//	public void sendWelcomeEmail() throws MessagingException, IOException, TemplateException {
+//		Mail mail = new Mail();
+//        mail.setFrom("no-reply@memorynotfound.com");
+//        mail.setTo("info@memorynotfound.com");
+//        mail.setSubject("Sending Email with Freemarker HTML Template Example");
+//
+//        Map<String, String> model = new HashMap<>();
+//        model.put("name", "Memorynotfound.com");
+//        model.put("location", "Belgium");
+//        model.put("signature", "https://memorynotfound.com");
+//        mail.setModel(model);
+//
+//        emailService.sendWelcomeAuthEmail(mail);
+//	}
+	
+	public User findByEmailAddress(String email) {
+		return userRepository.findByEmailAddress(email);
+	}
+	
+	public User save(User user) {
+		return userRepository.save(user);
 	}
 
 }

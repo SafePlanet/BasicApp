@@ -12,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 @Configuration
-@ComponentScan
+@ComponentScan({"org.springframework.social.connect", "com.spi"})
 @PropertySource("classpath:validationMessages.properties")
 public class ApplicationConfiguration {
 	

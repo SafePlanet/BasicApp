@@ -43,9 +43,9 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -83,6 +83,71 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 		</dependency>
+		 <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-core -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-core</artifactId>
+            <version>1.1.5.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-config -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-config</artifactId>
+            <version>1.1.5.RELEASE</version>
+        </dependency>
+        
+        
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-web -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+            <version>1.1.5.RELEASE</version>
+        </dependency>
+ 
+ 
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-security -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+            <version>1.1.5.RELEASE</version>
+        </dependency>
+ 
+ 
+ 
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-facebook -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+            <version>2.0.3.RELEASE</version>
+        </dependency>
+ 
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-twitter -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+            <version>1.1.2.RELEASE</version>
+        </dependency>
+ 
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-github -->
+        <!-- <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-github</artifactId>
+            <version>1.0.0.M4</version>
+        </dependency> -->
+ 
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-linkedin -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-linkedin</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+ 
+        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-google -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

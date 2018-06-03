@@ -1,4 +1,4 @@
-package com.spi.controller;
+package com.spi.controller.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

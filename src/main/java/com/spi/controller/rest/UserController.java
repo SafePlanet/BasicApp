@@ -1,8 +1,14 @@
-package com.spi.controller;
+package com.spi.controller.rest;
+
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +20,10 @@ import com.spi.service.dto.User;
 import com.spi.validator.UserSignupValidator;
 
 @RestController
-@RequestMapping(path="/")
-public class HomeController {
+@RequestMapping(path="/user")
+public class UserController {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -25,11 +31,11 @@ public class HomeController {
 	@Autowired
 	private UserSignupValidator userValidator;
 	
-	@PostMapping(path="/signup")
-	public void signUp(@RequestBody User externalUser) throws Exception {
-		LOG.info("Inside user signup {}" + externalUser.toString());
-		userValidator.validateUser(externalUser);
-		userService.signUp(externalUser);
+	@GetMapping
+	@PreAuthorize(value="hasRole('anonymous')")
+	public List<User> getAllUsers(Principal principal){
+		System.out.println(principal.toString());
+		return userService.getAllUsers();
 	}
 	
 
