@@ -1,4 +1,4 @@
-package com.spi.service.dto;
+package com.spi.dm;
 
 public enum Role {
 

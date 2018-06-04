@@ -1,4 +1,4 @@
-package com.spi.form;
+package com.spi.dm;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;

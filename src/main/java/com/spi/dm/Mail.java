@@ -1,4 +1,4 @@
-package com.spi.mail;
+package com.spi.dm;
 
 import java.util.Map;
 

@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.social.security.SocialUserDetails;
 
-import com.spi.service.dto.User;
+import com.spi.dm.User;
  
 public class SocialUserDetailsImpl implements SocialUserDetails {
  

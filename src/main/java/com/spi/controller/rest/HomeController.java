@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spi.dm.LoginRequest;
+import com.spi.dm.User;
 import com.spi.service.UserService;
-import com.spi.service.dto.LoginRequest;
-import com.spi.service.dto.User;
 import com.spi.validator.UserSignupValidator;
 
 @RestController

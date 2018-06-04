@@ -1,5 +1,5 @@
 
-package com.spi.service.dto;
+package com.spi.dm;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -183,7 +183,7 @@ public class User implements UserDetails, SocialUserDetails{
 	@Override
 	public String getUserId() {
 		
-		return id;
+		return username;
 	}
 	
 

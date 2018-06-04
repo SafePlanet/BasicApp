@@ -1,4 +1,4 @@
-package com.spi.mail;
+package com.spi.config;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

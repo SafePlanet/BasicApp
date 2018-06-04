@@ -1,5 +1,5 @@
 
-package com.spi.service.dto;
+package com.spi.dm;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

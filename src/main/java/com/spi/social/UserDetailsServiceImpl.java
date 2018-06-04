@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spi.dm.User;
 import com.spi.repository.UserRepository;
-import com.spi.service.dto.User;
   
 @Service
 @Transactional

@@ -1,26 +1,26 @@
-package com.spi.service.dto;
+package com.spi.dm;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Length;
 
 /**
  *
+ * @version 1.0
  * @author:
+ * 
  */
-public class LoginRequest {
+@XmlRootElement
+public class PasswordRequest {
 
-	private String username;
-
+	@Length(min = 8, max = 30, message="{password.length}")
 	private String password;
 
-	public String getUsername() {
-		return username;
+	public PasswordRequest() {
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public PasswordRequest(final String password) {
+		this.password = password;
 	}
 
 	public String getPassword() {
@@ -30,4 +30,5 @@ public class LoginRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 }

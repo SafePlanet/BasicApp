@@ -23,14 +23,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.spi.config.EmailService;
 import com.spi.config.ValidationMessageConfig;
+import com.spi.dm.LoginRequest;
+import com.spi.dm.Mail;
+import com.spi.dm.Role;
+import com.spi.dm.User;
 import com.spi.exception.ValidationMessageException;
-import com.spi.mail.EmailService;
-import com.spi.mail.Mail;
 import com.spi.repository.UserRepository;
-import com.spi.service.dto.LoginRequest;
-import com.spi.service.dto.Role;
-import com.spi.service.dto.User;
 import com.spi.utils.PasswordUtil;
 
 //import freemarker.template.TemplateException;

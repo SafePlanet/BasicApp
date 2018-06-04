@@ -13,11 +13,11 @@ import org.springframework.social.connect.UserProfile;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Component;
 
-import com.spi.form.AppUserForm;
+import com.spi.dm.AppUserForm;
+import com.spi.dm.Role;
+import com.spi.dm.SocialTypes;
+import com.spi.dm.User;
 import com.spi.repository.UserRepository;
-import com.spi.service.dto.Role;
-import com.spi.service.dto.SocialTypes;
-import com.spi.service.dto.User;
 
 @Component
 public class ConnectionSignUpImpl implements ConnectionSignUp {

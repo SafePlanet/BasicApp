@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spi.config.ValidationMessageConfig;
+import com.spi.dm.LoginRequest;
+import com.spi.dm.User;
 import com.spi.exception.ValidationMessageException;
-import com.spi.service.dto.LoginRequest;
-import com.spi.service.dto.User;
 
 @Service
 public class UserSignupValidator {

@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.security.SocialUserDetails;
 
-import com.spi.service.dto.User;
+import com.spi.dm.User;
 import com.spi.social.SocialUserDetailsImpl;
 
 public class SecurityUtil {

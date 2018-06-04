@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spi.form.AppUserForm;
+import com.spi.dm.AppUserForm;
+import com.spi.dm.User;
 import com.spi.repository.UserRepository;
-import com.spi.service.dto.User;
 import com.spi.social.ConnectionSignUpImpl;
 import com.spi.utils.SecurityUtil;
 import com.spi.utils.WebUtils;

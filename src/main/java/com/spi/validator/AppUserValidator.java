@@ -6,9 +6,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.spi.form.AppUserForm;
+import com.spi.dm.AppUserForm;
+import com.spi.dm.User;
 import com.spi.repository.UserRepository;
-import com.spi.service.dto.User;
   
 @Component
 public class AppUserValidator implements Validator {

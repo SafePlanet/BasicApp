@@ -9,8 +9,8 @@ import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.spi.dm.User;
 import com.spi.service.UserService;
-import com.spi.service.dto.User;
  
 @Service
 public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
