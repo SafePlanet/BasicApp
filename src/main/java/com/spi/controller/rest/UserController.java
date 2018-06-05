@@ -20,7 +20,7 @@ import com.spi.service.UserService;
 import com.spi.validator.UserSignupValidator;
 
 @RestController
-@RequestMapping(path="/user")
+@RequestMapping(path="/rest/user")
 public class UserController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
@@ -34,7 +34,7 @@ public class UserController {
 	@GetMapping
 	@PreAuthorize(value="hasRole('anonymous')")
 	public List<User> getAllUsers(Principal principal){
-		System.out.println(principal.toString());
+		LOG.debug("getAllUsers " + principal.toString());
 		return userService.getAllUsers();
 	}
 	

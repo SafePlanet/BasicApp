@@ -4,6 +4,12 @@ package com.spi.dm;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +20,7 @@ import org.springframework.social.security.SocialUserDetails;
 
 
 @Document
+@Configuration
 public class User implements UserDetails, SocialUserDetails{
 	
 	/**
@@ -23,16 +30,30 @@ public class User implements UserDetails, SocialUserDetails{
 	
 	@Id
 	private String id;
+	@NotBlank(message="{external.user.fisrtname.required}")
 	private String firstName;
+	@NotBlank(message="{external.user.lastname.required}")
 	private String lastName;
+	
 	@Indexed(unique=true)
+	@Email(message= "{external.user.email.invalid}")
+	@NotBlank(message="{external.user.email.required}")
 	private String emailAddress;
+	
+	@NotBlank(message = "{external.user.username.required}")
 	private String username;
+		
+	@NotBlank(message = "{external.user.password.required}")
+	@Size(min=8, max=30, message = "{external.user.password.length}")
 	private String password;
+	
 	private int passwordAttempts;
 	private boolean isVerified;
 	private String role;
+	
+	@NotBlank(message = "{external.user.mobile.required}")
 	private String mobile;
+	
 	private Address address;
 	private String userImage;
 	private String source;

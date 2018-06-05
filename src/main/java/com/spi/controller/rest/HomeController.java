@@ -1,5 +1,7 @@
 package com.spi.controller.rest;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,9 @@ public class HomeController {
 	private UserSignupValidator userValidator;
 	
 	@PostMapping(path="/signup")
-	public void signUp(@RequestBody User externalUser) throws Exception {
+	public void signUp(@Valid @RequestBody User externalUser) throws Exception {
 		LOG.info("Inside user signup {}" + externalUser.toString());
-		userValidator.validateUser(externalUser);
+//		userValidator.validateUser(externalUser);
 		userService.signUp(externalUser);
 	}
 	
